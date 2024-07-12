@@ -1,0 +1,8 @@
+bs4
+selenium
+requests
+asyncio
+aiohttp
+Pillow
+customtkinter
+CTkMessagebox
