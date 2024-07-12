@@ -80,7 +80,13 @@ Google Maps Scraper is a Python-based application that automates the process of 
 
 ## Screenshots
 
-![App Screenshot]()
+<a href="https://ibb.co/GJsJW69"><img src="https://i.ibb.co/z585XMF/Screenshot-from-2024-07-09-18-00-26.png" alt="Screenshot-from-2024-07-09-18-00-26" border="0"></a>
+
+## Support me
+
+<div align="center">
+<a href='https://ko-fi.com/mohamedog' target='_blank'><img height='64' style='border:0px;height:64px;' src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+</div>
 
 ## Contributing
 
@@ -90,7 +96,7 @@ Feel free to fork this project and submit pull requests. For major changes, plea
 
 ## Contact
 
-For any questions or feedback, please contact [yourname](mailto:youremail@example.com).
+For any questions or feedback, please contact [me](mailto:ouazzagmohamed@gmail.com).
 
 ---
 
