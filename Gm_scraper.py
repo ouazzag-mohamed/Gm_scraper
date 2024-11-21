@@ -89,6 +89,7 @@ def scraping_data():
     scroll_bar = driver.find_elements(By.XPATH, panl_xpath)
     scroll = True
     soup = BeautifulSoup(driver.page_source, 'html.parser')
+    num_of_reviews=[]
     data = []
     name = []
     phone = []
@@ -115,9 +116,11 @@ def scraping_data():
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     name_list = soup.find_all('div', class_='NrDZNb')
     phone_list = soup.find_all('span', class_='UsdlK')
-    for name_e, phone_e in zip(name_list, phone_list):
+    num_of_reviews_list=soup.find_all('span', class_='ZkP5Je')
+    for name_e, phone_e,num_of_reviews_e in zip(name_list, phone_list,num_of_reviews_list):
         name.append(name_e.text)
         phone.append(phone_e.text)
+        num_of_reviews.append(num_of_reviews_e['aria-label'])
     links = soup.find_all('div', class_='THOPZb')
     for i in links:
         website = i.find('a', class_='lcr4fd')
@@ -129,19 +132,20 @@ def scraping_data():
            websit.append('Not available')
     emails = asyncio.run(scrap_email_by_name(name))
     email.extend(emails)
-    for name_output, phone_output, website_output, email_output in zip(name, phone, websit, email):
+    for name_output, phone_output, website_output, email_output,num_of_reviews_output in zip(name, phone, websit, email,num_of_reviews):
         row = {
             'Name': name_output,
             'Phone number': phone_output,
             'Website': website_output,
-            'Email': email_output
+            'Email': email_output,
+            'Number of reviews':num_of_reviews_output
         }
-        update_table(name_output, phone_output, website_output, email_output)
+        update_table(name_output, phone_output, website_output, email_output,num_of_reviews_output)
     driver.quit()
 
 # Function to update the table with new data
-def update_table(name, phone, website, email):
-    table.insert('', 'end', values=(name, phone, website, email))
+def update_table(name, phone, website, email,num_of_reviews):
+    table.insert('', 'end', values=(name, phone, website, email,num_of_reviews))
     root.update()
 
 # Function to export data to a CSV file
@@ -154,11 +158,13 @@ def export_to_csv():
             'Name': row[0],
             'Phone number': row[1],
             'Website': row[2],
-            'Email': row[3]
+            'Email': row[3],
+            'Number of reviews':row[4]
+
         })
 
     with open('google_maps_data.csv', 'w', newline='') as file:
-        fieldnames = ['Name', 'Phone number', 'Website', 'Email']
+        fieldnames = ['Name', 'Phone number', 'Website', 'Email','Number of reviews']
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
@@ -181,11 +187,12 @@ export_button = ctk.CTkButton(frame_left, text='Export to CSV', fg_color='blue',
 export_button.pack(pady=10)
 
 # Create a Treeview table in the right frame
-table = Treeview(frame_right, columns=('name', 'phone', 'domain', 'email'), show='headings')
+table = Treeview(frame_right, columns=('name', 'phone', 'domain', 'email','number of reviews'), show='headings')
 table.heading('name', text='Name')
 table.heading('phone', text='Phone Number')
 table.heading('domain', text='Website')
 table.heading('email', text='Email')
+table.heading('number of reviews', text='Number of reviews')
 table.pack(expand=True, fill='both', padx=10, pady=10)
 
 # Start the main application loop
